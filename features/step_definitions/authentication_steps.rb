@@ -20,6 +20,7 @@ When /^the user submits valid signin information$/ do
   fill_in "Email",    with: @user.email
   fill_in "Password", with: @user.password 
   click_button "Sign in"
+  cookies[:remember_token] = @user.remember_token
 end
 
 Then /^he should see his profile page$/ do
@@ -28,4 +29,12 @@ end
 
 Then /^he should see a signout link$/ do
   page.should have_link('Sign out', href: signout_path)
+end
+
+Then /^he should see a settings link$/ do
+    page.should have_link('Settings', href: edit_user_path(@user))
+end
+
+Then /^he should see a users index link$/ do
+    page.should have_link('Users', href: users_path)
 end
